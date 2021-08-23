@@ -1,33 +1,35 @@
 let PlanPickerItemComponent = {
   template: '#plan-picker-item-template',
   props: {
-    name: { type: String, required: true },
-    selected: { type: Boolean, default: false },
+    name: { type: String, default: 'Popsy', required: true },
+    price: Number,
+    selected: { type: Boolean, default: false }
   },
-  methods:{
-    select(){
+  methods: {
+    select() {
+      this.selected = true
       this.$emit('select', this.name)
     }
   }
 }
 
-let PlanPickerComponent = {
+let PlanPickerItemTemplateComponent = {
   components: { 'plan-picker-item': PlanPickerItemComponent },
   template: '#plan-picker-template',
-  data(){
+  data() {
     return {
-      plans: ['The Single', 'The Curious', 'The Addict'],
-      selectedPlan: null
+      plans: ['The Hacker', 'The Addict', 'The Curious'],
+      selectedPlan: null,
     }
   },
-  methods:{
-    selectPlan(plan){
+  methods: {
+    selectPlan(plan) {
       this.selectedPlan = plan
     }
   }
 }
 
 const app = Vue.createApp({
-  components: { PlanPicker: PlanPickerComponent }
+  components: { 'plan-picker-item-template': PlanPickerItemTemplateComponent },
 })
-.mount('#app')
+.mount('#app') 

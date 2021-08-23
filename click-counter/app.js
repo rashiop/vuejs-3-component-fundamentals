@@ -3,7 +3,7 @@ const app = Vue.createApp({
 })
 .component('click-counter', {
   template: '#click-counter-template',
-  data(){
+  data() {
     return {
       count: 0
     }
