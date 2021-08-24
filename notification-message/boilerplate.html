@@ -9,21 +9,42 @@
   <div id="app" class="ui container">
     <h1>Notification Center</h1>
     
+    <notification-message
+      type="error"
+      header="Oh no"
+    >
+      <template #description><p>Sorry to hear that</p></template>
+    </notification-message>
+    
+    <notification-message
+      type="info"
+    >
+      <template #description><p>Mohon perhatian pengunjunbg harap</p></template>
+    </notification-message>
+    
+    <notification-message
+      type="warning"
+    >
+      <template #description><p>Berhati-hati melangkah</p></template>
+    </notification-message>
+
     <!-- Notification Message Markup -->
     <!-- Types: info, warning, error, success -->
-    <div class="ui info message">
-      <i class="close icon"></i>
-      <div class="header">
-        You are eligible for a reward
-      </div>
-      <p>Go to the <b>special offers</b> page to see now.</p>
-    </div>
+
 
   </div>
 
   <!-- Template for Notification Message -->
   <script type="text/x-template" id="notification-message-template">
-  
+    <div class="ui message" :class="type" v-if="visible">
+      <i class="close icon" @click="close"></i>
+      <div class="header">
+        {{header}}
+      </div>
+      <slot name="description">
+        Placeholder Description
+      </slot>
+    </div>
   </script>
 
   <!-- Import Vue.js -->
@@ -31,7 +52,30 @@
 
   <!-- Your JavaScript Code :) -->
   <script>
-    Vue.createApp({}).mount('#app')
+    let NotificationItemComponent = {
+      template: '#notification-message-template',
+      props: {
+        id: { type: Number },
+        type: { type: String, default: 'info', required: true },
+        header: { type: String, default: 'Information', required: true },
+        description: { type: String },
+      },
+      data() {
+        return {
+          visible: true
+        }
+      },
+      methods: {
+        close() {
+          this.visible = false
+        }
+      }
+    }
+    Vue.createApp({
+      components: {
+        'notification-message': NotificationItemComponent
+      }
+    }).mount('#app')
   </script>
 </body>
 
